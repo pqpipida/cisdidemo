@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: cisdi-quick-dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.73.1.78:3306/quickdev?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #指定数据库引擎
+
+logging:
+  level:
+    com.cisdi: Debug #日志Level设定
+  #file: 日志文件输出路径
+mybatis:
+  mapper-locations:
+  - classpath*:/com/cisdi/sqlMapper/**/*.xml #mybaits mapperxml文件路径，使用了cms后不要修改或者删除
+  - classpath*:/mapper/*.xml #mybaits mapperxml文件路径
+
+  #- classpath*: 可以添加新的扫描地址
+cisdi:
+  licenseFilePath: c:\cisdi.lic #许可文件绝对路径
+  workflow:
+    uploadPath: D:\upload\ #工作流表单上传附件用保存路径
+  websecurity:
+    permitAllantMachers: #此处为数组形式，配置为不受认证处理的url路径Pattern
+    - /static/** #js和css相关文件
+    - /cisdi/license/** #许可相关
+    - /favicon.ico
+    #loginPage: /cms/login #默认跳转登陆页面路径，因为已经前后分离不起效果，如果需要起效将redirectLogin配置为true。
+    loginProcessingUrl: /cms/dologin #登陆处理url，需要post形式提交，使用cms后不要更改
+    logoutUrl: /cms/logout #退出处理url，需要以post方式提交。使用cms后不要更改
+    rejectPublicInvocations: true #默认不配置为false，true为未设定权限资源不否允许访问
+
+
+
+scheduler:
+  sign:
+    key: a4e00d7c7394097c182d4b6d7b0638df #执行定时任务的签名key，根据自己的需要可任意定义签名key，以保证定时任务的安全性
+
